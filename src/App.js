@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import {Navbar} from './Components/Navbar/Navbar';
-import {Banner} from './Components/Banner/Banner';
 import {Menu} from './Components/Menu/Menu';
 import { FoodDialog } from './Components/FoodDialog/FoodDialog';
+import { Order } from './Components/Order/Order';
 import {GlobalStyle} from './Styles/globalStyles';
 
 function App() {
@@ -10,10 +10,10 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <FoodDialog openFood={openFood} setOpenFood={setOpenFood} />
       <Navbar />
-      <Banner />
+      <FoodDialog openFood={openFood} setOpenFood={setOpenFood} />
       <Menu setOpenFood={setOpenFood} />
+      <Order />
     </>
   );
 }
