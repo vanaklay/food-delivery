@@ -1,63 +1,82 @@
+export const formatPrice = (price) => {
+    return price.toLocaleString('fr-FR', {
+         style: 'currency', 
+         currency: 'EUR'
+    });
+}
+
 export const foodItems = [
     {
         name: 'Big Burger',
         imageUrl: '/img/burger.jpg',
-        category: 'bunz'
+        category: 'bunz',
+        price: 6
     },
     {
         name: 'Cheese Burger',
         imageUrl: '/img/cheese-burger.jpg',
-        category: 'bunz'
+        category: 'bunz',
+        price: 7
     },
     {
         name: 'Chicken One',
         imageUrl: '/img/chicken-burger.jpg',
-        category: 'bunz'
+        category: 'bunz',
+        price: 6
     },
     {
         name: 'The Burger Of The Demon',
         imageUrl: '/img/burger.jpg',
-        category: 'bunz'
+        category: 'bunz',
+        price: 8
     },
     {
         name: 'Big Burger',
         imageUrl: '/img/burger.jpg',
-        category: 'combo'
+        category: 'combo',
+        price: 9
     },
     {
         name: 'Cheese Burger',
         imageUrl: '/img/cheese-burger.jpg',
-        category: 'combo'
+        category: 'combo',
+        price: 9
     },
     {
         name: 'Chicken One',
         imageUrl: '/img/chicken-burger.jpg',
-        category: 'combo'
+        category: 'combo',
+        price: 9
     },
     {
         name: 'The Burger Of The Demon',
         imageUrl: '/img/burger.jpg',
-        category: 'combo'
+        category: 'combo',
+        price: 9
     },
     {
         name: 'Big Burger',
         imageUrl: '/img/burger.jpg',
-        category: 'starter'
+        category: 'starter',
+        price: 9
     },
     {
         name: 'Cheese Burger',
         imageUrl: '/img/cheese-burger.jpg',
-        category: 'starter'
+        category: 'starter',
+        price: 9
     },
     {
         name: 'Chicken One',
         imageUrl: '/img/chicken-burger.jpg',
-        category: 'starter'
+        category: 'starter',
+        price: 9
     },
     {
         name: 'The Burger Of The Demon',
         imageUrl: '/img/burger.jpg',
-        category: 'starter'
+        category: 'starter',
+        price: 9
     },
 ];
 

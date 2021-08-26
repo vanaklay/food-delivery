@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { FoodLabel } from '../Menu/FoodGrid';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
+import { formatPrice } from '../../Data/FoodData';
 
 const Dialog = styled.div`
     width: 500px;
@@ -81,7 +82,7 @@ export function FoodDialog({openFood, setOpenFood, setOrders, orders}) {
                     {openFood.name}
                 </DialogBannerName>
             </DialogBanner>
-            <DialogContent>Some Content</DialogContent>
+            <DialogContent>Prix : {formatPrice(openFood.price)}</DialogContent>
             <DialogFooter>
                 <CustomButton color='grey' onClick={close} >Annuler</CustomButton>
                 <CustomButton color={pizzaRed} onClick={addToOrder} >Ajouter</CustomButton>
