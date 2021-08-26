@@ -5,6 +5,7 @@ const BannerStyled = styled.div`
     background-image: url("img/buns.jpg");
     background-position: center;
     background-size: cover;
+    filter: contrast(75%);
 `;
 
 export function Banner() {
