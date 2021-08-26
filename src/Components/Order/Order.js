@@ -28,10 +28,11 @@ const OrderFooter = styled.div`
     padding: 1rem
 `;
 
-export function Order() {
+export function Order({orders}) {
     return <OrderStyled>
         <OrderContent>
-            Votre panier est vide.
+            {orders.length === 0 ? 'Votre panier est vide.' : <div>{orders.length}</div>}
+            
         </OrderContent>
         <OrderFooter>
             <CustomButton onClick={() => console.log('bouton clické...')} color={pizzaRed} >Voir le panier</CustomButton>

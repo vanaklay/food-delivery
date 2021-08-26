@@ -59,11 +59,20 @@ const DialogFooter = styled.div`
     padding: 1rem 0;
 `;
 
-export function FoodDialog({openFood, setOpenFood}) {
+export function FoodDialog({openFood, setOpenFood, setOrders, orders}) {
     const close = () => {
         setOpenFood();
     }
     if (!openFood) return null;
+
+    const order = {
+        name: openFood.name
+    }
+
+    const addToOrder = () => {
+        setOrders([...orders, order]);
+        close();
+    }
     return <>
         <DialogShadow onClick={close} />
         <Dialog>
@@ -75,7 +84,7 @@ export function FoodDialog({openFood, setOpenFood}) {
             <DialogContent>Some Content</DialogContent>
             <DialogFooter>
                 <CustomButton color='grey' onClick={close} >Annuler</CustomButton>
-                <CustomButton color={pizzaRed} onClick={() => console.log(openFood)} >Ajouter</CustomButton>
+                <CustomButton color={pizzaRed} onClick={addToOrder} >Ajouter</CustomButton>
             </DialogFooter>
         </Dialog>
     </>
