@@ -8,15 +8,19 @@ const MenuStyled = styled.div`
 
 export function Menu() {
     return <MenuStyled>
-        <h1>Menu</h1>
-        <FoodGrid>
-            {foods.map(food => (
-                <Food imageUrl={food.imageUrl} key={`${food.name}-${Math.random() + 9}`}>
-                    <FoodLabel>
-                        {food.name}
-                    </FoodLabel>
-                </Food>
-            ))}
-        </FoodGrid>
+        {Object.entries(foods).map(([category, foods]) => (
+            <>
+            <h2>{category}</h2>
+            <FoodGrid>
+                {foods.map(food => (
+                    <Food imageUrl={food.imageUrl} key={`${food.name}-${Math.random() + 9}`}>
+                        <FoodLabel>
+                            {food.name}
+                        </FoodLabel>
+                    </Food>
+                ))}
+            </FoodGrid>
+            </>
+        ))}
     </MenuStyled>;
 }
