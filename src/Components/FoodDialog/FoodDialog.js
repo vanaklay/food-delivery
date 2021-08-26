@@ -67,7 +67,8 @@ export function FoodDialog({openFood, setOpenFood, setOrders, orders}) {
     if (!openFood) return null;
 
     const order = {
-        name: openFood.name
+        name: openFood.name,
+        price: openFood.price
     }
 
     const addToOrder = () => {

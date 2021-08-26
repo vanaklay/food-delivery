@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
+import { formatPrice } from '../../Data/FoodData';
 
 const OrderStyled = styled.div`
     position: fixed;
@@ -28,7 +29,10 @@ const OrderContainer = styled.div`
 `;
 
 const OrderItem = styled.div`
-    padding: 1rem;
+    padding: 1rem 0;
+    display: grid;
+    grid-template-columns: 20px 150px 20px 60px;
+    justify-content: space-between;
 `;
 
 const OrderFooter = styled.div`
@@ -44,7 +48,14 @@ export function Order({orders}) {
          ) : (
             <OrderContent>
                 <OrderContainer>Votre Commande :</OrderContainer>
-                {orders.map(order => (<OrderItem key={`${Math.random() + 9}-o-${order.name}`}>{order.name}</OrderItem>))}
+                {orders.map(order => (
+                    <OrderItem key={`${Math.random() + 9}-o-${order.name}`}>
+                        <div>1</div>
+                        <div>{order.name}</div>
+                        <div>{formatPrice(order.price)}</div>
+                        <div>Retirer</div>
+                    </OrderItem>
+                ))}
             </OrderContent>
          )}
         <OrderFooter>
