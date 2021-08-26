@@ -1,5 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
-import { Navbar } from './Components/Navbar/Navbar';
+import {createGlobalStyle} from 'styled-components';
+import {Navbar} from './Components/Navbar/Navbar';
+import {Banner} from './Components/Banner/Banner';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -18,6 +19,7 @@ function App() {
     <>
       <GlobalStyle />
       <Navbar />
+      <Banner />
     </>
   );
 }
