@@ -1,18 +1,22 @@
 import styled from 'styled-components';
 import { FoodLabel } from '../Menu/FoodGrid';
+import { pizzaRed } from '../../Styles/colors';
+import { CustomButton } from '../CustomButton/CustomButton';
 
 const Dialog = styled.div`
     width: 500px;
-    height: 500px;
     background-color: white;
     position: fixed;
-    top: 75px;
-    left: 50px;
-    right: 50px;
+    top: 7rem;
+    left: 10px;
+    right: 10px;
     z-index: 10;
     margin-left: auto;
     margin-right: auto;
-    max-height: calc(100% - 100px);
+    max-height: calc(100% - 12rem);
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
 `;
 
 const DialogShadow = styled.div`
@@ -26,6 +30,8 @@ const DialogShadow = styled.div`
 `;
 
 const DialogBanner = styled.div`
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     padding: 1rem;
     min-height: 9rem;
     margin-bottom: 1rem;
@@ -38,6 +44,19 @@ const DialogBannerName = styled(FoodLabel)`
     top: 100px;
     font-size: 30px;
     padding: 5px 40px;
+`;
+
+const DialogContent = styled.div`
+    overflow: auto;
+`;
+
+const DialogFooter = styled.div`
+    box-shadow: 0px -2px 10px 0px grey;
+    height: 60px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    padding: 1rem 0;
 `;
 
 export function FoodDialog({openFood, setOpenFood}) {
@@ -53,6 +72,11 @@ export function FoodDialog({openFood, setOpenFood}) {
                     {openFood.name}
                 </DialogBannerName>
             </DialogBanner>
+            <DialogContent>Some Content</DialogContent>
+            <DialogFooter>
+                <CustomButton color='grey' onClick={close} >Annuler</CustomButton>
+                <CustomButton color={pizzaRed} onClick={() => console.log(openFood)} >Ajouter</CustomButton>
+            </DialogFooter>
         </Dialog>
     </>
 }
