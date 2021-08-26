@@ -5,7 +5,11 @@ export function useTitle({ openFood, orders}) {
         if (openFood) {
             document.title = openFood.name;
         } else {
-            document.title = `Mange ton bOb`;
+            document.title = orders.length === 0 ? 
+                `Mange ton bOb` 
+                : orders.length === 1 ? 
+                `[${orders.length}] item dans ton panier` 
+                : `[${orders.length}] items dans ton panier`;
         }
     });
 }
