@@ -114,7 +114,14 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
             </DialogContent>
             <DialogFooter>
                 <CustomButton color='grey' onClick={close} >Annuler</CustomButton>
-                <CustomButton color={pizzaRed} onClick={addToOrder} disabled={openFood.choices && !choiceRadio.value} >Ajouter {formatPrice(getOrderPrice(order))}</CustomButton>
+                <CustomButton 
+                    color={pizzaRed} 
+                    onClick={addToOrder} 
+                    disabled={
+                        (openFood.choices && !choiceRadio.value) 
+                        || (isPlan(openFood) && bobSelected.numberItemsSelected < openFood.limit )
+                        } 
+                    >Ajouter {formatPrice(getOrderPrice(order))}</CustomButton>
             </DialogFooter>
         </Dialog>
     </>
