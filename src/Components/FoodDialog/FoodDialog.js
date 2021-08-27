@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { FoodLabel } from '../Menu/FoodGrid';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
-import { formatPrice } from '../../Data/FoodData';
+import { formatPrice, getOrderPrice } from '../../Data/FoodData';
+import { QuantityInput } from './QuantityInput';
+import { useQuantity } from '../../Hooks/useQuantity';
 
 const Dialog = styled.div`
     width: 500px;
@@ -49,6 +51,7 @@ const DialogBannerName = styled(FoodLabel)`
 
 const DialogContent = styled.div`
     overflow: auto;
+    padding: 1rem;
 `;
 
 const DialogFooter = styled.div`
@@ -60,15 +63,16 @@ const DialogFooter = styled.div`
     padding: 1rem 0;
 `;
 
-export function FoodDialog({openFood, setOpenFood, setOrders, orders}) {
-    const close = () => {
-        setOpenFood();
-    }
-    if (!openFood) return null;
-
+function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
+    const quantity = useQuantity(openFood && openFood.quantity);
     const order = {
         name: openFood.name,
-        price: openFood.price
+        price: openFood.price,
+        quantity: quantity.value
+    }
+    
+    const close = () => {
+        setOpenFood();
     }
 
     const addToOrder = () => {
@@ -83,11 +87,19 @@ export function FoodDialog({openFood, setOpenFood, setOrders, orders}) {
                     {openFood.name}
                 </DialogBannerName>
             </DialogBanner>
-            <DialogContent>Prix : {formatPrice(openFood.price)}</DialogContent>
+            <DialogContent>
+                Prix : {formatPrice(openFood.price)}
+                <QuantityInput quantity={quantity} />
+            </DialogContent>
             <DialogFooter>
                 <CustomButton color='grey' onClick={close} >Annuler</CustomButton>
-                <CustomButton color={pizzaRed} onClick={addToOrder} >Ajouter</CustomButton>
+                <CustomButton color={pizzaRed} onClick={addToOrder} >Ajouter {formatPrice(getOrderPrice(order))}</CustomButton>
             </DialogFooter>
         </Dialog>
     </>
+}
+
+export function FoodDialog(props) {
+    if (!props.openFood) return null;
+    return <FoodDialogContainer {...props} />;
 }

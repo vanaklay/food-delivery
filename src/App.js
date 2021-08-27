@@ -15,7 +15,7 @@ function App() {
     <>
       <GlobalStyle />
       <Navbar />
-      <FoodDialog {...openFood} {...orders} /> {/** spread the properties of this object as props */}
+      <FoodDialog {...openFood} {...orders} />
       <Menu {...openFood} />
       <Order {...orders} />
     </>

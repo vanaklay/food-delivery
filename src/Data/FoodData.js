@@ -5,6 +5,10 @@ export const formatPrice = (price) => {
     });
 }
 
+export const getOrderPrice = (order) => {
+    return order.quantity * order.price;
+} 
+
 export const foodItems = [
     {
         name: 'Big Burger',

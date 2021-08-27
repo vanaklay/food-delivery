@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
-import { formatPrice } from '../../Data/FoodData';
+import { formatPrice, getOrderPrice } from '../../Data/FoodData';
 
 const OrderStyled = styled.div`
     position: fixed;
@@ -50,9 +50,9 @@ export function Order({orders}) {
                 <OrderContainer>Votre Commande :</OrderContainer>
                 {orders.map(order => (
                     <OrderItem key={`${Math.random() + 9}-o-${order.name}`}>
-                        <div>1</div>
+                        <div>{order.quantity}</div>
                         <div>{order.name}</div>
-                        <div>{formatPrice(order.price)}</div>
+                        <div>{formatPrice(getOrderPrice(order))}</div>
                         <div>Retirer</div>
                     </OrderItem>
                 ))}
