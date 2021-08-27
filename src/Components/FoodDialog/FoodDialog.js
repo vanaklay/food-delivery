@@ -2,9 +2,11 @@ import styled from 'styled-components';
 import { FoodLabel } from '../Menu/FoodGrid';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
-import { formatPrice, getOrderPrice } from '../../Data/FoodData';
+import { formatPrice, getOrderPrice, isCombo } from '../../Data/FoodData';
 import { QuantityInput } from './QuantityInput';
 import { useQuantity } from '../../Hooks/useQuantity';
+import { Toppings } from './Toppings'
+import { useToppings } from '../../Hooks/useToppings';
 
 const Dialog = styled.div`
     width: 500px;
@@ -60,15 +62,18 @@ const DialogFooter = styled.div`
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     display: flex;
-    padding: 1rem 0;
+    padding: 1rem 0 1rem;
 `;
 
 function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
     const quantity = useQuantity(openFood && openFood.quantity);
+    const toppings = useToppings(openFood.toppings);
     const order = {
         name: openFood.name,
         price: openFood.price,
-        quantity: quantity.value
+        quantity: quantity.value,
+        toppings: toppings.toppings,
+        category: openFood.category
     }
     
     const close = () => {
@@ -90,6 +95,12 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
             <DialogContent>
                 Prix : {formatPrice(openFood.price)}
                 <QuantityInput quantity={quantity} />
+                {isCombo(openFood) && 
+                    <>
+                    <h3>Composes ton combo : </h3>
+                    <Toppings {...toppings} />
+                    </>
+                }
             </DialogContent>
             <DialogFooter>
                 <CustomButton color='grey' onClick={close} >Annuler</CustomButton>

@@ -13,78 +13,170 @@ export const getSubTotalPrice = (orders) => {
     return orders.reduce((total, order) => (total + getOrderPrice(order)), 0);
 }
 
+export const isCombo = (food) => {
+    return food.category === 'combo';
+}
+
+export const isPlan = (food) => {
+    return food.category === 'plans';
+}
+
 export const foodItems = [
     {
-        name: 'Big Burger',
+        name: 'Authentic',
         imageUrl: '/img/burger.jpg',
-        category: 'bunz',
-        price: 6
+        category: 'bob',
+        price: 2.5
     },
     {
-        name: 'Cheese Burger',
+        name: 'Bomb',
         imageUrl: '/img/cheese-burger.jpg',
-        category: 'bunz',
+        category: 'bob',
+        price: 2.5
+    },
+    {
+        name: 'Cheesy',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'bob',
+        price: 2.5
+    },
+    {
+        name: 'Thon',
+        imageUrl: '/img/burger.jpg',
+        category: 'bob',
+        price: 2.5
+    },
+    {
+        name: 'Veggi',
+        imageUrl: '/img/burger.jpg',
+        category: 'bob',
+        price: 2.5
+    },
+    {
+        name: 'Ginger',
+        imageUrl: '/img/cheese-burger.jpg',
+        category: 'bob',
+        price: 2.5
+    },
+    {
+        name: 'Salade papaye / boeuf',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'starters',
+        price: 4.5
+    },
+    {
+        name: 'Spring Roll-up Poulet X 2',
+        imageUrl: '/img/burger.jpg',
+        category: 'starters',
+        price: 2
+    },
+    {
+        name: 'Spring Roll-up Boeuf X 2',
+        imageUrl: '/img/burger.jpg',
+        category: 'starters',
+        price: 2
+    },
+    {
+        name: 'Spring Roll-up Crevette X 2',
+        imageUrl: '/img/burger.jpg',
+        category: 'starters',
+        price: 2.5
+    },
+    {
+        name: 'Pho',
+        imageUrl: '/img/burger.jpg',
+        category: 'bols',
+        price: 10.5
+    },
+    {
+        name: 'Loc-Lac',
+        imageUrl: '/img/cheese-burger.jpg',
+        category: 'bols',
+        price: 10.5
+    },
+    {
+        name: 'Bo-Bun Crevettes',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'bols',
+        price: 10
+    },
+    {
+        name: 'Bo-Bun Boeuf',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'bols',
+        price: 10
+    },
+    {
+        name: 'Bo-Bun Poulet',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'bols',
+        price: 10
+    },
+    {
+        name: '8 bOb',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'plans',
+        price: 12
+    },
+    {
+        name: '12 bOb',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'plans',
+        price: 15
+    },
+    {
+        name: '15 bOb',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'plans',
+        price: 23
+    },
+    {
+        name: '20 bOb',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'plans',
+        price: 30
+    },
+    {
+        name: 'Starter + bOb x 2 + boisson',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'combo',
         price: 7
     },
     {
-        name: 'Chicken One',
-        imageUrl: '/img/chicken-burger.jpg',
-        category: 'bunz',
-        price: 6
-    },
-    {
-        name: 'The Burger Of The Demon',
-        imageUrl: '/img/burger.jpg',
-        category: 'bunz',
-        price: 8
-    },
-    {
-        name: 'Big Burger',
-        imageUrl: '/img/burger.jpg',
-        category: 'combo',
-        price: 9
-    },
-    {
-        name: 'Cheese Burger',
-        imageUrl: '/img/cheese-burger.jpg',
-        category: 'combo',
-        price: 9
-    },
-    {
-        name: 'Chicken One',
+        name: 'bOb + Bol + boisson',
         imageUrl: '/img/chicken-burger.jpg',
         category: 'combo',
-        price: 9
+        price: 12.5
     },
     {
-        name: 'The Burger Of The Demon',
-        imageUrl: '/img/burger.jpg',
-        category: 'combo',
-        price: 9
-    },
-    {
-        name: 'Big Burger',
-        imageUrl: '/img/burger.jpg',
-        category: 'starter',
-        price: 9
-    },
-    {
-        name: 'Cheese Burger',
-        imageUrl: '/img/cheese-burger.jpg',
-        category: 'starter',
-        price: 9
-    },
-    {
-        name: 'Chicken One',
+        name: 'Soft drink',
         imageUrl: '/img/chicken-burger.jpg',
-        category: 'starter',
-        price: 9
+        category: 'drink',
+        price: 2
     },
     {
-        name: 'The Burger Of The Demon',
-        imageUrl: '/img/burger.jpg',
-        category: 'starter',
-        price: 9
+        name: 'Café glacé',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'drink',
+        price: 3.5
+    },
+    {
+        name: 'Jus de coco',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'drink',
+        price: 2.5
+    },
+    {
+        name: 'Tiramisu',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'dessert',
+        price: 3.5
+    },
+    {
+        name: 'Salade de fruits',
+        imageUrl: '/img/chicken-burger.jpg',
+        category: 'dessert',
+        price: 3.5
     },
 ];
 

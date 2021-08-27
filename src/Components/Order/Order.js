@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
-import { formatPrice, getOrderPrice, getSubTotalPrice } from '../../Data/FoodData';
+import { formatPrice, getOrderPrice, getSubTotalPrice, isCombo } from '../../Data/FoodData';
 
 const OrderStyled = styled.div`
     position: fixed;
@@ -30,9 +30,21 @@ const OrderContainer = styled.div`
 
 const OrderItem = styled.div`
     padding: 1rem 0;
+`;
+
+const OrderItemRow = styled.div`
     display: grid;
     grid-template-columns: 20px 150px 20px 60px;
     justify-content: space-between;
+`;
+
+const OrderToppingsRow = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    font-size: 12px;
+    color: grey;
+    padding: 0 2rem;
 `;
 
 const OrderFooter = styled.div`
@@ -64,10 +76,20 @@ export function Order({orders}) {
                     <OrderContainer>Votre Commande :</OrderContainer>
                     {orders.map(order => (
                         <OrderItem key={`${Math.random() + 9}-o-${order.name}`}>
-                            <div>{order.quantity}</div>
-                            <div>{order.name}</div>
-                            <div>{formatPrice(getOrderPrice(order))}</div>
-                            <div>Retirer</div>
+                            <OrderItemRow>
+                                <div>{order.quantity}</div>
+                                <div>{order.name}</div>
+                                <div>{formatPrice(getOrderPrice(order))}</div>
+                                <div>Retirer</div>
+                            </OrderItemRow>
+                            {isCombo(order) && 
+                                <OrderToppingsRow>
+                                    {order.toppings
+                                        .filter(topping => topping.checked)
+                                        .map(topping => (<div>{topping.name}</div>))
+                                    }
+                                </OrderToppingsRow>
+                            }
                         </OrderItem>
                     ))}
                 </OrderContent>
