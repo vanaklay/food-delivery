@@ -10,6 +10,11 @@ export const CustomButton = styled.div`
     width: 200px;
     cursor: pointer;
     ${({color}) => `background-color: ${(color)};`}
+    ${({ disabled }) => 
+        disabled && 
+        `opacity: 0.5;
+            pointer-events: none;
+            `}
 `;
 
 export const IncrementButton = styled.div`

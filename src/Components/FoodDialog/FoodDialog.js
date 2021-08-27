@@ -8,6 +8,8 @@ import { useQuantity } from '../../Hooks/useQuantity';
 import { useBobAsToppings, useToppings } from '../../Hooks/useToppings';
 import { QuantityBob } from './QuantityBob';
 import { Combo } from './Combo';
+import { useChoice } from '../../Hooks/useChoice';
+import { Choices } from './Choices';
 
 const Dialog = styled.div`
     width: 500px;
@@ -70,13 +72,15 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
     const quantity = useQuantity(openFood && openFood.quantity);
     const toppings = useToppings(openFood.toppings);
     const bobSelected = useBobAsToppings();
+    const choiceRadio = useChoice(openFood.choice);
     const order = {
         name: openFood.name,
         price: openFood.price,
         quantity: quantity.value,
         toppings: toppings.toppings,
         category: openFood.category,
-        bobSelected: bobSelected.items
+        bobSelected: bobSelected.items,
+        choice: choiceRadio.value
     }
     
     const close = () => {
@@ -104,10 +108,13 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
                 {isCombo(openFood) && 
                     <Combo />
                 }
+                {openFood.choices && 
+                    <Choices openFood={openFood} choiceRadio={choiceRadio} />
+                }
             </DialogContent>
             <DialogFooter>
                 <CustomButton color='grey' onClick={close} >Annuler</CustomButton>
-                <CustomButton color={pizzaRed} onClick={addToOrder} >Ajouter {formatPrice(getOrderPrice(order))}</CustomButton>
+                <CustomButton color={pizzaRed} onClick={addToOrder} disabled={openFood.choices && !choiceRadio.value} >Ajouter {formatPrice(getOrderPrice(order))}</CustomButton>
             </DialogFooter>
         </Dialog>
     </>

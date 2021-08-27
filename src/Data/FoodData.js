@@ -158,6 +158,7 @@ export const foodItems = [
         name: 'Soft drink',
         imageUrl: '/img/chicken-burger.jpg',
         category: 'drink',
+        choices: ['Coca cola', 'Sprite', 'Fanta', 'Orangina'],
         price: 2
     },
     {
@@ -183,7 +184,7 @@ export const foodItems = [
         imageUrl: '/img/chicken-burger.jpg',
         category: 'dessert',
         price: 3.5
-    },
+    }
 ];
 
 export const foods = foodItems.reduce((res, food) => {

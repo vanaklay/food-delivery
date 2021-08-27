@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export const useToppings = (defaultTopping) => {
     const [toppings, setToppings] = useState(defaultTopping || getDefaultToppings());
@@ -27,7 +27,7 @@ export const useBobAsToppings = () => {
             setItems(newBobSelected);
         }
     }
-    
+
     const numberItemsSelected = items.reduce((total, item) => {
         return total + item.quantity;
     }, 0);

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
-import { formatPrice, getOrderPrice, getSubTotalPrice, isCombo, isPlan } from '../../Data/FoodData';
+import { formatPrice, getOrderPrice, getSubTotalPrice, isCombo, isPlan, isChoice } from '../../Data/FoodData';
 
 const OrderStyled = styled.div`
     position: fixed;
@@ -73,6 +73,7 @@ const SubTotalRow = styled.div`
 
 export function Order({orders}) {
     const subtotal = getSubTotalPrice(orders);
+    orders.map(order => console.log('order => ', order));
     return <OrderStyled>
         { orders.length === 0 ? (
             <OrderContent>Votre panier est vide</OrderContent>
@@ -107,6 +108,11 @@ export function Order({orders}) {
                                             </DetailOrderRow>
                                             ))
                                     }
+                                </OrderToppingsRow>
+                            }
+                            {order.choice && 
+                                <OrderToppingsRow>
+                                    {order.choice}
                                 </OrderToppingsRow>
                             }
                         </OrderItem>
