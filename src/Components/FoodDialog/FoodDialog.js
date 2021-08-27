@@ -7,7 +7,7 @@ import { QuantityInput } from './QuantityInput';
 import { useQuantity } from '../../Hooks/useQuantity';
 import { useBobAsToppings, useToppings } from '../../Hooks/useToppings';
 import { QuantityBob } from './QuantityBob';
-import { Combo } from './Combo';
+import { ComboMenu, ComboSecondMenu } from './Combo';
 import { useChoice } from '../../Hooks/useChoice';
 import { Choices } from './Choices';
 
@@ -73,6 +73,11 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
     const toppings = useToppings(openFood.toppings);
     const bobSelected = useBobAsToppings();
     const choiceRadio = useChoice(openFood.choice);
+    const choiceStarter = useChoice(openFood.combo?.starters);
+    const choiceBob1 = useChoice(openFood.combo?.bobs);
+    const choiceBob2 = useChoice(openFood.combo?.bobs);
+    const choiceDrink = useChoice(openFood.combo?.drinks);
+    const choiceBol = useChoice(openFood.combo?.bols);
     const order = {
         name: openFood.name,
         price: openFood.price,
@@ -80,8 +85,17 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
         toppings: toppings.toppings,
         category: openFood.category,
         bobSelected: bobSelected.items,
-        choice: choiceRadio.value
+        choice: choiceRadio.value,
+        combo: [
+            openFood.subTitle === 'combo1' ? choiceStarter.value : null,
+            choiceBob1.value,
+            openFood.subTitle === 'combo1' ? choiceBob2.value : null,
+            openFood.subTitle === 'combo1' ? null : choiceBol.value,
+            choiceDrink.value
+        ]
     }
+
+    console.log('order length => ', order.combo.length);
     
     const close = () => {
         setOpenFood();
@@ -105,8 +119,22 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
                 {isPlan(openFood) && 
                     <QuantityBob {...bobSelected} limit={openFood.limit} />
                 }
-                {isCombo(openFood) && 
-                    <Combo />
+                {(isCombo(openFood) && openFood.subTitle === 'combo1')
+                    ? (<ComboMenu 
+                        openFood={openFood} 
+                        choiceStarter={choiceStarter} 
+                        choiceBob1={choiceBob1}
+                        choiceBob2={choiceBob2}
+                        choiceDrink={choiceDrink}
+                         />
+                    ) : (
+                        <ComboSecondMenu 
+                            openFood={openFood} 
+                            choiceBob1={choiceBob1}
+                            choiceBol={choiceBol}
+                            choiceDrink={choiceDrink}
+                        />
+                    )
                 }
                 {openFood.choices && 
                     <Choices openFood={openFood} choiceRadio={choiceRadio} />
@@ -120,6 +148,7 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
                     disabled={
                         (openFood.choices && !choiceRadio.value) 
                         || (isPlan(openFood) && bobSelected.numberItemsSelected < openFood.limit )
+                        || (isCombo(openFood) && order.combo.length < 3)
                         } 
                     >Ajouter {formatPrice(getOrderPrice(order))}</CustomButton>
             </DialogFooter>

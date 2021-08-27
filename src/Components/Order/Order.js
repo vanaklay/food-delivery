@@ -89,13 +89,10 @@ export function Order({orders}) {
                                 <div>{formatPrice(getOrderPrice(order))}</div>
                                 <div>Retirer</div>
                             </OrderItemRow>
-                            {isCombo(order) && 
-                                <OrderToppingsRow>
-                                    {order.toppings
-                                        .filter(topping => topping.checked)
-                                        .map(topping => (<div>{topping.name}</div>))
-                                    }
-                                </OrderToppingsRow>
+                            {(isCombo(order) && order.combo) && 
+                                (<OrderToppingsRow>
+                                    {order.combo?.map(item => (<span>{item}</span>))}
+                                </OrderToppingsRow>)
                             }
                             {isPlan(order) && 
                                 <OrderToppingsRow>

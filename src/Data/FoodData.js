@@ -144,14 +144,24 @@ export const foodItems = [
         name: 'Starter + bOb x 2 + boisson',
         imageUrl: '/img/chicken-burger.jpg',
         category: 'combo',
-        limit: 2,
+        combo: {
+                starters: ["Spring Roll-up Poulet", "Spring Roll-up Boeuf", "Spring Roll-up Crevettes"],
+                bobs: ["Authentic", "Bomb", "Cheesy", "Thon", "Veggi", "Ginger"],
+                drinks: ['Coca cola', 'Sprite', 'Fanta', 'Orangina']
+        },
+        subTitle: 'combo1',
         price: 7
     },
     {
         name: 'bOb + Bol + boisson',
         imageUrl: '/img/chicken-burger.jpg',
         category: 'combo',
-        limit: 1,
+        combo: {
+                bobs: ["Authentic", "Bomb", "Cheesy", "Thon", "Veggi", "Ginger"],
+                drinks: ['Coca cola', 'Sprite', 'Fanta', 'Orangina'],
+                bols: ["Bo-Bun Crevettes", "Bo-Bun Poulet", "Bo-Bun Boeuf"]
+        },
+        subTitle: 'combo2',
         price: 12.5
     },
     {
