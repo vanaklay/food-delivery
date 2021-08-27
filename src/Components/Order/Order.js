@@ -53,6 +53,11 @@ const DetailOrderRow = styled.div`
     width: 100%;
 `;
 
+const TrashItem = styled.div`
+    color: red;
+    cursor: pointer;
+`;
+
 const OrderFooter = styled.div`
     display: flex;
     flex-direction: column;
@@ -71,9 +76,15 @@ const SubTotalRow = styled.div`
     padding: 0 1rem;
 `;
 
-export function Order({orders}) {
+export function Order({orders, setOrders}) {
     const subtotal = getSubTotalPrice(orders);
-    orders.map(order => console.log('order => ', order));
+
+    const deleteItem = (index) => {
+        const newOrders = [...orders];
+        newOrders.splice(index, 1);
+        setOrders(newOrders);
+    }
+
     return <OrderStyled>
         { orders.length === 0 ? (
             <OrderContent>Votre panier est vide</OrderContent>
@@ -81,25 +92,25 @@ export function Order({orders}) {
              <>
                 <OrderContent>
                     <OrderContainer>Votre Commande :</OrderContainer>
-                    {orders.map(order => (
+                    {orders.map((order, index) => (
                         <OrderItem key={`${Math.random() + 9}-o-${order.name}`}>
                             <OrderItemRow>
                                 <div>{order.quantity}</div>
                                 <div>{order.name}</div>
                                 <div>{formatPrice(getOrderPrice(order))}</div>
-                                <div>Retirer</div>
+                                <TrashItem onClick={() => deleteItem(index)}>🗑️</TrashItem>
                             </OrderItemRow>
                             {(isCombo(order) && order.combo) && 
                                 (<OrderToppingsRow>
-                                    {order.combo?.map(item => (<span>{item}</span>))}
+                                    {order.combo?.map((item, index) => (<span key={`${item}-${index}-${Math.random() + 9}`}>{item}</span>))}
                                 </OrderToppingsRow>)
                             }
                             {isPlan(order) && 
                                 <OrderToppingsRow>
                                     {order.bobSelected
                                         .filter(bob => bob.quantity >= 1)
-                                        .map(bob => (
-                                            <DetailOrderRow>
+                                        .map((bob, index) => (
+                                            <DetailOrderRow key={`${index}-${bob}-${Math.random() + 9}`}>
                                                 <span>{bob.name}</span>
                                                 <span> X {bob.quantity}</span> 
                                             </DetailOrderRow>

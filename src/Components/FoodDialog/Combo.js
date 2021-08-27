@@ -41,60 +41,61 @@ const ChoiceRadio = ({title, arrayChoice, useChoice, name}) => {
     );
 }
 
-export const ComboMenu = ({openFood, choiceStarter, choiceBob1, choiceBob2, choiceDrink}) => {
+export const ComboMenu = ({openFood, choiceStarter, choiceBob1, choiceBob2, choiceDrink, choiceBol}) => {
     return (
         <>
             <h3>Composes ton combo : </h3>
-            <ChoiceRadio
-                title="Ton starter ?"
-                arrayChoice={openFood.combo.starters}
-                useChoice={choiceStarter}
-                name="starter"
-            />
-            <ChoiceRadio
-                title="Ton premier bOb ?"
-                arrayChoice={openFood.combo.bobs}
-                useChoice={choiceBob1}
-                name="bob1"
-            />
-            <ChoiceRadio
-                title="Ton second bOb ?"
-                arrayChoice={openFood.combo.bobs}
-                useChoice={choiceBob2}
-                name="bob2"
-            />
-            <ChoiceRadio
-                title="Ta boisson ?"
-                arrayChoice={openFood.combo.drinks}
-                useChoice={choiceDrink}
-                name="drink"
-            />
-        </>
-    );
-}
-
-export const ComboSecondMenu = ({openFood, choiceBob1, choiceDrink, choiceBol}) => {
-    return (
-        <>
-            <h3>Composes ton combo : </h3>
-            <ChoiceRadio
-                title="Ton bOb ?"
-                arrayChoice={openFood.combo.bobs}
-                useChoice={choiceBob1}
-                name="bob"
-            />
-            <ChoiceRadio
-                title="Ton bol ?"
-                arrayChoice={openFood.combo.bols}
-                useChoice={choiceBol}
-                name="bol"
-            />
-            <ChoiceRadio
-                title="Ta boisson ?"
-                arrayChoice={openFood.combo.drinks}
-                useChoice={choiceDrink}
-                name="drink"
-            />
+            {openFood.subTitle === 'combo1' 
+                ? (
+                    <>
+                        <ChoiceRadio
+                            title="Ton starter ?"
+                            arrayChoice={openFood.combo.starters}
+                            useChoice={choiceStarter}
+                            name="starter"
+                        />
+                        <ChoiceRadio
+                            title="Ton premier bOb ?"
+                            arrayChoice={openFood.combo.bobs}
+                            useChoice={choiceBob1}
+                            name="bob1"
+                        />
+                        <ChoiceRadio
+                            title="Ton second bOb ?"
+                            arrayChoice={openFood.combo.bobs}
+                            useChoice={choiceBob2}
+                            name="bob2"
+                        />
+                        <ChoiceRadio
+                            title="Ta boisson ?"
+                            arrayChoice={openFood.combo.drinks}
+                            useChoice={choiceDrink}
+                            name="drink"
+                        />
+                    </>
+                ) : (
+                    <>
+                        <ChoiceRadio
+                            title="Ton bOb ?"
+                            arrayChoice={openFood.combo.bobs}
+                            useChoice={choiceBob1}
+                            name="bob"
+                        />
+                        <ChoiceRadio
+                            title="Ton bol ?"
+                            arrayChoice={openFood.combo.bols}
+                            useChoice={choiceBol}
+                            name="bol"
+                        />
+                        <ChoiceRadio
+                            title="Ta boisson ?"
+                            arrayChoice={openFood.combo.drinks}
+                            useChoice={choiceDrink}
+                            name="drink"
+                        />
+                    </>
+                )}
+            
         </>
     );
 }

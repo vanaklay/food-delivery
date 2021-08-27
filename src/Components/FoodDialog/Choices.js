@@ -24,8 +24,8 @@ export const Choices = ({openFood, choiceRadio}) => {
         <>
             <h3>Fais ton choix</h3>
             <ChoiceGrid>
-                {openFood.choices.map(choice => (
-                    <SelectedZone>
+                {openFood.choices.map((choice, index) => (
+                    <SelectedZone key={`${index}-${Math.random() +1}-${choice}`}>
                         <RadioInput 
                             type="radio"
                             id={choice}

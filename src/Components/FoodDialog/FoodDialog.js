@@ -7,7 +7,7 @@ import { QuantityInput } from './QuantityInput';
 import { useQuantity } from '../../Hooks/useQuantity';
 import { useBobAsToppings, useToppings } from '../../Hooks/useToppings';
 import { QuantityBob } from './QuantityBob';
-import { ComboMenu, ComboSecondMenu } from './Combo';
+import { ComboMenu } from './Combo';
 import { useChoice } from '../../Hooks/useChoice';
 import { Choices } from './Choices';
 
@@ -94,8 +94,6 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
             choiceDrink.value
         ]
     }
-
-    console.log('order length => ', order.combo.length);
     
     const close = () => {
         setOpenFood();
@@ -119,22 +117,15 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
                 {isPlan(openFood) && 
                     <QuantityBob {...bobSelected} limit={openFood.limit} />
                 }
-                {(isCombo(openFood) && openFood.subTitle === 'combo1')
-                    ? (<ComboMenu 
+                {isCombo(openFood) && 
+                    (<ComboMenu 
                         openFood={openFood} 
                         choiceStarter={choiceStarter} 
                         choiceBob1={choiceBob1}
                         choiceBob2={choiceBob2}
                         choiceDrink={choiceDrink}
-                         />
-                    ) : (
-                        <ComboSecondMenu 
-                            openFood={openFood} 
-                            choiceBob1={choiceBob1}
-                            choiceBol={choiceBol}
-                            choiceDrink={choiceDrink}
-                        />
-                    )
+                        choiceBol={choiceBol}
+                         />)
                 }
                 {openFood.choices && 
                     <Choices openFood={openFood} choiceRadio={choiceRadio} />
