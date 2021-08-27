@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
-import { formatPrice, getOrderPrice, getSubTotalPrice, isCombo } from '../../Data/FoodData';
+import { formatPrice, getOrderPrice, getSubTotalPrice, isCombo, isPlan } from '../../Data/FoodData';
 
 const OrderStyled = styled.div`
     position: fixed;
@@ -47,6 +47,12 @@ const OrderToppingsRow = styled.div`
     padding: 0 2rem;
 `;
 
+const DetailOrderRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+`;
+
 const OrderFooter = styled.div`
     display: flex;
     flex-direction: column;
@@ -87,6 +93,19 @@ export function Order({orders}) {
                                     {order.toppings
                                         .filter(topping => topping.checked)
                                         .map(topping => (<div>{topping.name}</div>))
+                                    }
+                                </OrderToppingsRow>
+                            }
+                            {isPlan(order) && 
+                                <OrderToppingsRow>
+                                    {order.bobSelected
+                                        .filter(bob => bob.quantity >= 1)
+                                        .map(bob => (
+                                            <DetailOrderRow>
+                                                <span>{bob.name}</span>
+                                                <span> X {bob.quantity}</span> 
+                                            </DetailOrderRow>
+                                            ))
                                     }
                                 </OrderToppingsRow>
                             }

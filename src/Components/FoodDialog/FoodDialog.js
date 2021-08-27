@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import { FoodLabel } from '../Menu/FoodGrid';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
-import { formatPrice, getOrderPrice, isCombo } from '../../Data/FoodData';
+import { formatPrice, getOrderPrice, isCombo, isPlan } from '../../Data/FoodData';
 import { QuantityInput } from './QuantityInput';
 import { useQuantity } from '../../Hooks/useQuantity';
-import { Toppings } from './Toppings'
-import { useToppings } from '../../Hooks/useToppings';
+import { useBobAsToppings, useToppings } from '../../Hooks/useToppings';
+import { QuantityBob } from './QuantityBob';
+import { Combo } from './Combo';
 
 const Dialog = styled.div`
     width: 500px;
@@ -68,12 +69,14 @@ const DialogFooter = styled.div`
 function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
     const quantity = useQuantity(openFood && openFood.quantity);
     const toppings = useToppings(openFood.toppings);
+    const bobSelected = useBobAsToppings();
     const order = {
         name: openFood.name,
         price: openFood.price,
         quantity: quantity.value,
         toppings: toppings.toppings,
-        category: openFood.category
+        category: openFood.category,
+        bobSelected: bobSelected.items
     }
     
     const close = () => {
@@ -95,11 +98,11 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
             <DialogContent>
                 Prix : {formatPrice(openFood.price)}
                 <QuantityInput quantity={quantity} />
+                {isPlan(openFood) && 
+                    <QuantityBob {...bobSelected} limit={openFood.limit} />
+                }
                 {isCombo(openFood) && 
-                    <>
-                    <h3>Composes ton combo : </h3>
-                    <Toppings {...toppings} />
-                    </>
+                    <Combo />
                 }
             </DialogContent>
             <DialogFooter>

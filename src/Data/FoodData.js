@@ -116,36 +116,42 @@ export const foodItems = [
         name: '8 bOb',
         imageUrl: '/img/chicken-burger.jpg',
         category: 'plans',
+        limit: 8,
         price: 12
     },
     {
         name: '12 bOb',
         imageUrl: '/img/chicken-burger.jpg',
         category: 'plans',
+        limit: 12,
         price: 15
     },
     {
         name: '15 bOb',
         imageUrl: '/img/chicken-burger.jpg',
         category: 'plans',
+        limit: 15,
         price: 23
     },
     {
         name: '20 bOb',
         imageUrl: '/img/chicken-burger.jpg',
         category: 'plans',
+        limit: 20,
         price: 30
     },
     {
         name: 'Starter + bOb x 2 + boisson',
         imageUrl: '/img/chicken-burger.jpg',
         category: 'combo',
+        limit: 2,
         price: 7
     },
     {
         name: 'bOb + Bol + boisson',
         imageUrl: '/img/chicken-burger.jpg',
         category: 'combo',
+        limit: 1,
         price: 12.5
     },
     {
