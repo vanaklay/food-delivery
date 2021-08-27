@@ -23,8 +23,8 @@ const ChoiceRadio = ({title, arrayChoice, useChoice, name}) => {
         <>
             <h3>{title}</h3>
             <ChoiceGrid>
-                {arrayChoice.map(choice => (
-                    <SelectedZone>
+                {arrayChoice?.map((choice, index) => (
+                    <SelectedZone key={`${index}-${Math.random() + 9}-${choice}`}>
                         <RadioInput 
                             type="radio"
                             id={choice}

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
-import { formatPrice, getOrderPrice, getSubTotalPrice, isCombo, isPlan, isChoice } from '../../Data/FoodData';
+import { formatPrice, getOrderPrice, getSubTotalPrice, isCombo, isPlan } from '../../Data/FoodData';
 
 const OrderStyled = styled.div`
     position: fixed;
@@ -23,9 +23,13 @@ const OrderContent = styled.div`
     padding: 1rem;
 `;
 
-const OrderContainer = styled.div`
+const OrderTitle = styled.div`
     padding: 1rem 0;
     border-bottom: 1px solid grey;
+`;
+
+const DetailsContainer = styled.div`
+    overflow: auto;
 `;
 
 const OrderItem = styled.div`
@@ -34,7 +38,7 @@ const OrderItem = styled.div`
 
 const OrderItemRow = styled.div`
     display: grid;
-    grid-template-columns: 20px 150px 20px 60px;
+    grid-template-columns: 10% 50% 20% 10% 10%;
     justify-content: space-between;
 `;
 
@@ -58,6 +62,11 @@ const TrashItem = styled.div`
     cursor: pointer;
 `;
 
+const EditItem = styled.div`
+    color: green;
+    cursor: pointer;
+`;
+
 const OrderFooter = styled.div`
     display: flex;
     flex-direction: column;
@@ -76,7 +85,7 @@ const SubTotalRow = styled.div`
     padding: 0 1rem;
 `;
 
-export function Order({orders, setOrders}) {
+export function Order({orders, setOrders, setOpenFood}) {
     const subtotal = getSubTotalPrice(orders);
 
     const deleteItem = (index) => {
@@ -91,40 +100,45 @@ export function Order({orders, setOrders}) {
          ) : (
              <>
                 <OrderContent>
-                    <OrderContainer>Votre Commande :</OrderContainer>
-                    {orders.map((order, index) => (
-                        <OrderItem key={`${Math.random() + 9}-o-${order.name}`}>
-                            <OrderItemRow>
-                                <div>{order.quantity}</div>
-                                <div>{order.name}</div>
-                                <div>{formatPrice(getOrderPrice(order))}</div>
-                                <TrashItem onClick={() => deleteItem(index)}>🗑️</TrashItem>
-                            </OrderItemRow>
-                            {(isCombo(order) && order.combo) && 
-                                (<OrderToppingsRow>
-                                    {order.combo?.map((item, index) => (<span key={`${item}-${index}-${Math.random() + 9}`}>{item}</span>))}
-                                </OrderToppingsRow>)
-                            }
-                            {isPlan(order) && 
-                                <OrderToppingsRow>
-                                    {order.bobSelected
-                                        .filter(bob => bob.quantity >= 1)
-                                        .map((bob, index) => (
-                                            <DetailOrderRow key={`${index}-${bob}-${Math.random() + 9}`}>
-                                                <span>{bob.name}</span>
-                                                <span> X {bob.quantity}</span> 
-                                            </DetailOrderRow>
-                                            ))
-                                    }
-                                </OrderToppingsRow>
-                            }
-                            {order.choice && 
-                                <OrderToppingsRow>
-                                    {order.choice}
-                                </OrderToppingsRow>
-                            }
-                        </OrderItem>
-                    ))}
+                    <OrderTitle>Votre Commande :</OrderTitle>
+                    <DetailsContainer>
+                        {orders.map((order, index) => (
+                            <OrderItem key={`${Math.random() + 9}-o-${order.name}`} >
+                                <OrderItemRow>
+                                    <div>{order.quantity}</div>
+                                    <div>{order.name}</div>
+                                    <div>{formatPrice(getOrderPrice(order))}</div>
+                                    <EditItem onClick={() => {
+                                        setOpenFood({...order, index});
+                                    }}>&#9999;</EditItem>
+                                    <TrashItem onClick={() => deleteItem(index)}>&#8855;</TrashItem>
+                                </OrderItemRow>
+                                {(isCombo(order) && order.comboChoice) && 
+                                    (<OrderToppingsRow>
+                                        {order.comboChoice?.map((item, index) => (<span key={`${item}-${index}-${Math.random() + 9}`}>{item}</span>))}
+                                    </OrderToppingsRow>)
+                                }
+                                {isPlan(order) && 
+                                    <OrderToppingsRow>
+                                        {order.bobSelected
+                                            .filter(bob => bob.quantity >= 1)
+                                            .map((bob, index) => (
+                                                <DetailOrderRow key={`${index}-${bob}-${Math.random() + 9}`}>
+                                                    <span>{bob.name}</span>
+                                                    <span> X {bob.quantity}</span> 
+                                                </DetailOrderRow>
+                                                ))
+                                        }
+                                    </OrderToppingsRow>
+                                }
+                                {order.choice && 
+                                    <OrderToppingsRow>
+                                        {order.choice}
+                                    </OrderToppingsRow>
+                                }
+                            </OrderItem>
+                        ))}
+                    </DetailsContainer>
                 </OrderContent>
                 <OrderFooter>
                     <SubTotal>

@@ -17,6 +17,10 @@ export const isCombo = (food) => {
     return food.category === 'combo';
 }
 
+export const isComboA = (food) => {
+    return (food.category === 'combo') && (food.subTitle === 'combo1');
+}
+
 export const isPlan = (food) => {
     return food.category === 'plans';
 }

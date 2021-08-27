@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { FoodLabel } from '../Menu/FoodGrid';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
-import { formatPrice, getOrderPrice, isCombo, isPlan } from '../../Data/FoodData';
+import { formatPrice, getOrderPrice, isCombo, isPlan, isComboA } from '../../Data/FoodData';
 import { QuantityInput } from './QuantityInput';
 import { useQuantity } from '../../Hooks/useQuantity';
-import { useBobAsToppings, useToppings } from '../../Hooks/useToppings';
+import { useBobAsToppings } from '../../Hooks/useToppings';
 import { QuantityBob } from './QuantityBob';
 import { ComboMenu } from './Combo';
 import { useChoice } from '../../Hooks/useChoice';
@@ -70,27 +70,26 @@ const DialogFooter = styled.div`
 
 function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
     const quantity = useQuantity(openFood && openFood.quantity);
-    const toppings = useToppings(openFood.toppings);
-    const bobSelected = useBobAsToppings();
+    const {items, incrementItem, decrementItem, numberItemsSelected } = useBobAsToppings();
     const choiceRadio = useChoice(openFood.choice);
     const choiceStarter = useChoice(openFood.combo?.starters);
     const choiceBob1 = useChoice(openFood.combo?.bobs);
     const choiceBob2 = useChoice(openFood.combo?.bobs);
     const choiceDrink = useChoice(openFood.combo?.drinks);
     const choiceBol = useChoice(openFood.combo?.bols);
+    const isEditing = openFood.index > -1;
+
     const order = {
-        name: openFood.name,
-        price: openFood.price,
+        ...openFood,
         quantity: quantity.value,
-        toppings: toppings.toppings,
         category: openFood.category,
-        bobSelected: bobSelected.items,
+        bobSelected: items,
         choice: choiceRadio.value,
-        combo: [
-            openFood.subTitle === 'combo1' ? choiceStarter.value : null,
+        comboChoice: [
+            isComboA(openFood) ? choiceStarter.value : null,
             choiceBob1.value,
-            openFood.subTitle === 'combo1' ? choiceBob2.value : null,
-            openFood.subTitle === 'combo1' ? null : choiceBol.value,
+            isComboA(openFood) ? choiceBob2.value : null,
+            isComboA(openFood) ? null : choiceBol.value,
             choiceDrink.value
         ]
     }
@@ -103,6 +102,27 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
         setOrders([...orders, order]);
         close();
     }
+
+    const editOrder = () => {
+        const newOrders = [...orders];
+        newOrders[openFood.index] = order;
+        setOrders(newOrders);
+        close();
+    }
+
+    const checkComboChoiceA = (order) => {
+        return (typeof order.comboChoice[0] !== 'string') 
+            || (typeof order.comboChoice[1] !== 'string')
+            || (typeof order.comboChoice[2] !== 'string')
+            || (typeof order.comboChoice[4] !== 'string')
+    }
+
+    const checkComboChoiceB = (order) => {
+        return (typeof order.comboChoice[1] !== 'string') 
+            || (typeof order.comboChoice[3] !== 'string')
+            || (typeof order.comboChoice[4] !== 'string')
+    }
+
     return <>
         <DialogShadow onClick={close} />
         <Dialog>
@@ -114,8 +134,14 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
             <DialogContent>
                 Prix : {formatPrice(openFood.price)}
                 <QuantityInput quantity={quantity} />
-                {isPlan(openFood) && 
-                    <QuantityBob {...bobSelected} limit={openFood.limit} />
+                {isPlan(openFood) && (
+                    <QuantityBob 
+                        items={items} 
+                        limit={openFood.limit}
+                        incrementItem={incrementItem}
+                        decrementItem={decrementItem}
+                        numberItemsSelected={numberItemsSelected}
+                            />)
                 }
                 {isCombo(openFood) && 
                     (<ComboMenu 
@@ -135,13 +161,14 @@ function FoodDialogContainer({openFood, setOpenFood, setOrders, orders}) {
                 <CustomButton color='grey' onClick={close} >Annuler</CustomButton>
                 <CustomButton 
                     color={pizzaRed} 
-                    onClick={addToOrder} 
+                    onClick={isEditing ? editOrder : addToOrder} 
                     disabled={
                         (openFood.choices && !choiceRadio.value) 
-                        || (isPlan(openFood) && bobSelected.numberItemsSelected < openFood.limit )
-                        || (isCombo(openFood) && order.combo.length < 3)
+                        || (isPlan(openFood) && numberItemsSelected < openFood.limit )
+                        || (isComboA(openFood) && checkComboChoiceA(order))
+                        || (isCombo(openFood) && !isComboA(openFood) && checkComboChoiceB(order))
                         } 
-                    >Ajouter {formatPrice(getOrderPrice(order))}</CustomButton>
+                    >{isEditing ? `Modifier` : `Ajouter`} {formatPrice(getOrderPrice(order))}</CustomButton>
             </DialogFooter>
         </Dialog>
     </>

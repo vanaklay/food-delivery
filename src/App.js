@@ -17,7 +17,7 @@ function App() {
       <Navbar />
       <FoodDialog {...openFood} {...orders} />
       <Menu {...openFood} />
-      <Order {...orders} />
+      <Order {...orders} {...openFood} />
     </>
   );
 }
