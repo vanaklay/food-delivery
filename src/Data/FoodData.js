@@ -9,6 +9,10 @@ export const getOrderPrice = (order) => {
     return order.quantity * order.price;
 } 
 
+export const getSubTotalPrice = (orders) => {
+    return orders.reduce((total, order) => (total + getOrderPrice(order)), 0);
+}
+
 export const foodItems = [
     {
         name: 'Big Burger',

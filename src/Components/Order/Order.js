@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { pizzaRed } from '../../Styles/colors';
 import { CustomButton } from '../CustomButton/CustomButton';
-import { formatPrice, getOrderPrice } from '../../Data/FoodData';
+import { formatPrice, getOrderPrice, getSubTotalPrice } from '../../Data/FoodData';
 
 const OrderStyled = styled.div`
     position: fixed;
@@ -37,29 +37,55 @@ const OrderItem = styled.div`
 
 const OrderFooter = styled.div`
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     padding: 1rem;
 `;
 
+const SubTotal = styled.div`
+    width: 100%;
+`;
+
+const SubTotalRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+`;
+
 export function Order({orders}) {
+    const subtotal = getSubTotalPrice(orders);
     return <OrderStyled>
         { orders.length === 0 ? (
             <OrderContent>Votre panier est vide</OrderContent>
          ) : (
-            <OrderContent>
-                <OrderContainer>Votre Commande :</OrderContainer>
-                {orders.map(order => (
-                    <OrderItem key={`${Math.random() + 9}-o-${order.name}`}>
-                        <div>{order.quantity}</div>
-                        <div>{order.name}</div>
-                        <div>{formatPrice(getOrderPrice(order))}</div>
-                        <div>Retirer</div>
-                    </OrderItem>
-                ))}
-            </OrderContent>
+             <>
+                <OrderContent>
+                    <OrderContainer>Votre Commande :</OrderContainer>
+                    {orders.map(order => (
+                        <OrderItem key={`${Math.random() + 9}-o-${order.name}`}>
+                            <div>{order.quantity}</div>
+                            <div>{order.name}</div>
+                            <div>{formatPrice(getOrderPrice(order))}</div>
+                            <div>Retirer</div>
+                        </OrderItem>
+                    ))}
+                </OrderContent>
+                <OrderFooter>
+                    <SubTotal>
+                        <SubTotalRow>
+                            <span>
+                                Total : 
+                            </span>
+                            <span>
+                                {formatPrice(subtotal)}
+                            </span>
+                        </SubTotalRow>
+                    </SubTotal>
+                    <CustomButton onClick={() => console.log('bouton clické...')} color={pizzaRed} >Voir le panier</CustomButton>
+                </OrderFooter>
+            </>
          )}
-        <OrderFooter>
-            <CustomButton onClick={() => console.log('bouton clické...')} color={pizzaRed} >Voir le panier</CustomButton>
-        </OrderFooter>
+        
     </OrderStyled>
 }
